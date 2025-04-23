@@ -50,7 +50,7 @@ const Sign_Up = () => {
                     setShowerr(error.msg); // Show error messages
                 }
             } else {
-                setShowerr(json.error);
+                setShowerr(json.error.msg);
             }
         }
     };
@@ -113,6 +113,7 @@ const Sign_Up = () => {
                             <input 
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                type="password"
                                 name="password" 
                                 id="password" 
                                 className="form-control" 

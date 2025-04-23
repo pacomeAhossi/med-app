@@ -43,7 +43,9 @@ const Navbar = () => {
 
       if (storedemail) {
             setIsLoggedIn(true);
-            setUsername(storedemail);
+            const rawUsername = storedemail.split("@")[0];
+            const extratedUsername = rawUsername.charAt(0).toUpperCase() + rawUsername.slice(1).toLocaleLowerCase();
+            setUsername(extratedUsername);
           }
         }, []);
   return (
@@ -71,6 +73,9 @@ const Navbar = () => {
         </li>
         {isLoggedIn?(
           <>
+            <li className="link">
+              Welcome, {username}
+            </li>
             <li className="link">
               <button className="btn2" onClick={handleLogout}>
                 Logout
