@@ -82,4 +82,4 @@ const InstantConsultation = () => {
     )
 }
 
-export default InstantConsultation
+export default InstantConsultation;
