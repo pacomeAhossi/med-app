@@ -1,0 +1,39 @@
+.notification-card {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background: #fff;
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  z-index: 1000;
+  animation: slideUp 0.4s ease-out;
+  border-left: 6px solid #4CAF50;
+  text-align: left;
+}
+
+.notification-card h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #333;
+}
+
+.notification-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

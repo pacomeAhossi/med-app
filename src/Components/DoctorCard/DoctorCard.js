@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './DoctorCard.css';
-// import AppointmentForm from '../AppointmentForm/AppointmentForm';
 import AppointmentForm from '../AppointmentForm/AppointmentForm';
 import { v4 as uuidv4 } from 'uuid';
+import Notification from '../Notification/Notification';
 
 
 const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
@@ -18,6 +18,8 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
   const handleCancel = (appointmentId) => {
     const updatedAppointments = appointments.filter((appointment) => appointment.id !== appointmentId);
     setAppointments(updatedAppointments);
+    localStorage.removeItem('doctorData');
+    localStorage.removeItem('lastAppointmentData');
   };
 
   const handleFormSubmit = (appointmentData) => {
@@ -28,6 +30,21 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
     const updatedAppointments = [...appointments, newAppointment];
     setAppointments(updatedAppointments);
     setShowModal(false);
+
+    const doctorData = {
+        name : name,
+        speciality : speciality,
+        experience : experience,
+    };
+    
+    const storedDoctorData = {
+        name : name,
+        speciality : speciality,
+        experience : experience,
+    };
+
+    localStorage.setItem('doctorData', JSON.stringify(storedDoctorData));
+    localStorage.setItem('lastAppointmentData', JSON.stringify(newAppointment));
   };
 
   return (

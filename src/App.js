@@ -10,12 +10,13 @@ import InstantConsultation from './Components/InstantConsultation/InstantConsult
 import DoctorCard from "./Components/DoctorCard/DoctorCard";
 import AppointmentForm from "./Components/AppointmentForm/AppointmentForm";
 import BookingConsultation from "./Components/BookingConsultation";
+import Notification from "./Components/Notification/Notification";
 
 function App() {
   return (
     <div className="App">
         <Router>
-            <Navbar/>
+            <Navbar />
             <Routes>
                 <Route path="/" element={<Landing_Page />} />
                 <Route path="/signup" element={<Sign_Up />} />
