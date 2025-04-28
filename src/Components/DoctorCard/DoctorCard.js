@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './DoctorCard.css';
 import AppointmentForm from '../AppointmentForm/AppointmentForm';
 import { v4 as uuidv4 } from 'uuid';
-import Notification from '../Notification/Notification';
-
+import { NotificationContext } from '../Notification/NotificationContext';
 
 const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
+    const { triggerNotificationRefresh }  = useContext(NotificationContext);
   const [showModal, setShowModal] = useState(false);
   const [appointments, setAppointments] = useState([]);
+
+
+  const doctorKey = `appointments_${name.replace(/\s/g, '_')}`;
+
+  useEffect(() => {
+    const savedAppointments = JSON.parse(localStorage.getItem(doctorKey)) || [];
+    setAppointments(savedAppointments);
+  }, [doctorKey]);
 
   const handleBooking = () => {
     setShowModal(true);
@@ -18,8 +26,16 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
   const handleCancel = (appointmentId) => {
     const updatedAppointments = appointments.filter((appointment) => appointment.id !== appointmentId);
     setAppointments(updatedAppointments);
+
+    if (updatedAppointments.length === 0) {
+      localStorage.removeItem(doctorKey);
+    } else {
+      localStorage.setItem(doctorKey, JSON.stringify(updatedAppointments));
+    }
     localStorage.removeItem('doctorData');
     localStorage.removeItem('lastAppointmentData');
+    triggerNotificationRefresh();
+    //setNotificationTrigger(prev => prev + 1);  Pour refresh Notification
   };
 
   const handleFormSubmit = (appointmentData) => {
@@ -31,27 +47,27 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
     setAppointments(updatedAppointments);
     setShowModal(false);
 
-    const doctorData = {
-        name : name,
-        speciality : speciality,
-        experience : experience,
-    };
+    localStorage.setItem(doctorKey, JSON.stringify(updatedAppointments));
     
-    const storedDoctorData = {
-        name : name,
-        speciality : speciality,
-        experience : experience,
-    };
-
-    localStorage.setItem('doctorData', JSON.stringify(storedDoctorData));
+    //  Stockage de doctorData et le dernier rendez-vous dans le localStorage
+    localStorage.setItem('doctorData', JSON.stringify({
+      name,
+      speciality,
+      experience,
+    }));
     localStorage.setItem('lastAppointmentData', JSON.stringify(newAppointment));
+
+    triggerNotificationRefresh();
+    //setNotificationTrigger(prev => prev + 1);  Refresh Notification
   };
 
   return (
     <div className="doctor-card-container">
       <div className="doctor-card-details-container">
         <div className="doctor-card-profile-image-container">
-        <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16"> <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/> </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+          </svg>
         </div>
         <div className="doctor-card-details">
           <div className="doctor-card-detail-name">{name}</div>
@@ -61,17 +77,11 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
         </div>
       </div>
 
-
       <div className="doctor-card-options-container">
-       <Popup
-          style={{ backgroundColor: '#FFFFFF' }}
+        <Popup
           trigger={
             <button className={`book-appointment-btn ${appointments.length > 0 ? 'cancel-appointment' : ''}`}>
-              {appointments.length > 0 ? (
-                <div>Cancel Appointment</div>
-              ) : (
-                <div>Book Appointment</div>
-              )}
+              {appointments.length > 0 ? "Cancel Appointment" : "Book Appointment"}
               <div>No Booking Fee</div>
             </button>
           }
@@ -83,7 +93,9 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
             <div className="doctorbg" style={{ height: '100vh', overflow: 'scroll' }}>
               <div>
                 <div className="doctor-card-profile-image-container">
-                <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16"> <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/> </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" fill="currentColor" className="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                  </svg>
                 </div>
                 <div className="doctor-card-details">
                   <div className="doctor-card-detail-name">{name}</div>
