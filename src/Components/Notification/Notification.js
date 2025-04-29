@@ -17,6 +17,9 @@ const Notification = ({ children }) => {
     const { refreshKey } = useContext(NotificationContext);
     const [fadeOut, setFadeOut] = useState(false); // state pour le fade-out
 
+    const [appointmentList, setAppointmentList] = useState([]);
+
+
   // useEffect hook to perform side effects in the component
   useEffect(() => {
     // Retrieve stored username, doctor data, and appointment data from sessionStorage and localStorage
@@ -36,16 +39,38 @@ const Notification = ({ children }) => {
         setDoctorData(null);
     }
   
-    if (storedAppointmentData) {
-        setAppointmentData(storedAppointmentData);
-        setFadeOut(false); // Si nouvel appointment, on annule le fadeOut
-      } else if (appointmentData) {
-        // Si plus de données mais qu'il y avait un appointment avant : lancer fade-out
-        setFadeOut(true);
-        setTimeout(() => {
-          setAppointmentData(null);
-        }, 800); // temps = même que transition (0.8s)
+    // if (storedAppointmentData) {
+    //     setAppointmentData(storedAppointmentData);
+    //     setFadeOut(false); 
+    //   } else if (appointmentData) {
+        
+    //     setFadeOut(true);
+    //     setTimeout(() => {
+    //       setAppointmentData(null);
+    //     }, 800); 
+    // }
+
+    const allAppointments = [];
+
+    for (const key in localStorage) {
+        if (key.startsWith('appointments_')) {
+          const doctorName = key.replace('appointments_', '').replace(/_/g, ' ');
+          const appointments = JSON.parse(localStorage.getItem(key));
+          if (Array.isArray(appointments)) {
+            appointments.forEach(appt => {
+              allAppointments.push({
+                doctorName,
+                ...appt
+              });
+            });
+          }
+        }
       }
+    
+      allAppointments.sort((a, b) => {
+        return Date.parse(a.appointmentDate) - Date.parse(b.appointmentDate);
+      });
+      setAppointmentList(allAppointments);
 
     // Simuler un délai de chargement
     setTimeout(() => {
@@ -75,7 +100,6 @@ const Notification = ({ children }) => {
   
   // Return JSX elements to display Navbar, children components, and appointment details if user is logged in
   return (
-    // <NotificationContext.Provider value={{ triggerNotificationRefresh }}>
 
         <div>
             {/* Render Navbar component */}
@@ -96,39 +120,41 @@ const Notification = ({ children }) => {
                 </div>
                 </>
             )} */}
-            {isLoggedIn && appointmentData && (
-                <>
-                <div className={`notification-card mt-4 p-4 border rounded ${fadeOut ? 'fade-out' : ''}`}>
-                    {isLoading ? (
-                    // Placeholder animé de Bootstrap pendant le chargement
-                    <div className="placeholder-glow">
-                        <h3 className="placeholder col-6"></h3>
-                        <p className="placeholder col-7"></p>
-                        <p className="placeholder col-5"></p>
-                        <p className="placeholder col-8"></p>
-                        <p className="placeholder col-4"></p>
-                        <p className="placeholder col-9"></p>
-                        <p className="placeholder col-6"></p>
-                    </div>
-                    ) : (
-                    // Contenu normal quand chargé
-                    appointmentData && doctorData && (
-                        <>
-                        <h3>📅 Appointment Confirmed</h3>
-                        <p><strong>Doctor:</strong> {doctorData.name}</p>
-                        <p><strong>Speciality:</strong> {doctorData.speciality} years</p>
-                        <p><strong>Name:</strong> {appointmentData.name}</p>
-                        <p><strong>Phone Number:</strong> {appointmentData.phoneNumber}</p>
-                        <p><strong>Date of Appointment:</strong> {formatDate(appointmentData.appointmentDate)}</p>
-                        <p><strong>Time Slot:</strong> {formatTime(appointmentData.appointmentTime)}</p>
-                        </>
-                    )
-                    )}
+            {isLoggedIn && appointmentList.length > 0 && (
+                <div className='notificaion-container mt-4 p-2'>
+                    { appointmentList.map((appt, index) => (
+                        <div key={index} className={`notification-card mt-4 p-4 border rounded ${fadeOut ? 'fade-out' : ''}`}>
+                            {isLoading ? (
+                            // Placeholder animé de Bootstrap pendant le chargement
+                            <div className="placeholder-glow">
+                                <h3 className="placeholder col-6"></h3>
+                                <p className="placeholder col-7"></p>
+                                <p className="placeholder col-5"></p>
+                                <p className="placeholder col-8"></p>
+                                <p className="placeholder col-4"></p>
+                                <p className="placeholder col-9"></p>
+                                <p className="placeholder col-6"></p>
+                            </div>
+                            ) : (
+                            // Contenu normal quand chargé
+                            // appointmentData && doctorData && (
+                                <>
+                                <h3>📅 Appointment Confirmed</h3>
+                                <p><strong>Doctor:</strong> {appt.doctor?.name}</p>
+                                <p><strong>Speciality:</strong> {appt.doctor?.speciality}</p>
+                                <p><strong>Name:</strong> {appt.name}</p>
+                                <p><strong>Phone Number:</strong> {appt.phoneNumber}</p>
+                                <p><strong>Date of Appointment:</strong> {formatDate(appt.appointmentDate)}</p>
+                                <p><strong>Time Slot:</strong> {formatTime(appt.appointmentTime)}</p>
+                                </>
+                            // )
+                            )}
+                        </div>
+
+                    )) }
                 </div>
-                </>
             )}
         </div>
-    // </NotificationContext.Provider>
   );
 };
 

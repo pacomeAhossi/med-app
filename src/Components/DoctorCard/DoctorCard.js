@@ -32,33 +32,27 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
     } else {
       localStorage.setItem(doctorKey, JSON.stringify(updatedAppointments));
     }
-    localStorage.removeItem('doctorData');
-    localStorage.removeItem('lastAppointmentData');
     triggerNotificationRefresh();
-    //setNotificationTrigger(prev => prev + 1);  Pour refresh Notification
   };
 
   const handleFormSubmit = (appointmentData) => {
     const newAppointment = {
       id: uuidv4(),
       ...appointmentData,
+      doctor:{
+        name,
+        speciality,
+        experience,
+        ratings
+      }
     };
     const updatedAppointments = [...appointments, newAppointment];
     setAppointments(updatedAppointments);
     setShowModal(false);
 
     localStorage.setItem(doctorKey, JSON.stringify(updatedAppointments));
-    
-    //  Stockage de doctorData et le dernier rendez-vous dans le localStorage
-    localStorage.setItem('doctorData', JSON.stringify({
-      name,
-      speciality,
-      experience,
-    }));
-    localStorage.setItem('lastAppointmentData', JSON.stringify(newAppointment));
 
     triggerNotificationRefresh();
-    //setNotificationTrigger(prev => prev + 1);  Refresh Notification
   };
 
   return (
