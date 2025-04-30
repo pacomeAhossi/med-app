@@ -71,7 +71,7 @@ const Navbar = () => {
         <li className="link">
          <Link to="/reviews">Reviews</Link>
         </li>
-        {isLoggedIn?(
+        {/* {isLoggedIn?(
           <>
             <li className="link">
               Welcome, {username}
@@ -96,6 +96,54 @@ const Navbar = () => {
               </Link>
             </li>
           </>
+        )} */}
+        {isLoggedIn ? (
+            <>
+                <li
+                    className="link position-relative"
+                    onMouseEnter={handleDropdown}
+                    onMouseLeave={handleDropdown}
+                    style={{ cursor: 'pointer' }}
+                >
+                    Welcome, {username}
+                    {showDropdown && (
+                        <div
+                            className="card shadow-sm position-absolute"
+                            style={{
+                                top: '100%',
+                                left: 0,
+                                zIndex: 1000,
+                                minWidth: '180px',
+                                minHeight: '100px'
+                            }}
+                        >
+                            <div className="card-body p-2">
+                                <Link to="/profile" className="dropdown-item text-dark">
+                                <i className="fa fa-user me-2"></i> Your Profile
+                                </Link>
+                            </div>
+                        </div>
+                    )}
+                </li>
+                <li className="link">
+                <button className="btn2" onClick={handleLogout}>
+                    Logout
+                </button>
+                </li>
+            </>
+        ) : (
+            <>
+                <li className="link">
+                <Link to="/signup">
+                    <button className="btn1">Sign Up</button>
+                </Link>
+                </li>
+                <li className="link">
+                <Link to="/login">
+                    <button className="btn1">Login</button>
+                </Link>
+                </li>
+            </>
         )}
       </ul>
     </nav>
