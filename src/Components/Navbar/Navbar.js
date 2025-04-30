@@ -71,32 +71,6 @@ const Navbar = () => {
         <li className="link">
          <Link to="/reviews">Reviews</Link>
         </li>
-        {/* {isLoggedIn?(
-          <>
-            <li className="link">
-              Welcome, {username}
-            </li>
-            <li className="link">
-              <button className="btn2" onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
-            
-          </>
-        ) : (
-          <>
-            <li className="link">
-              <Link to="/signup">
-                <button className="btn1">Sign Up</button>
-              </Link>
-            </li>
-            <li className="link">
-              <Link to="/login">
-                <button className="btn1">Login</button>
-              </Link>
-            </li>
-          </>
-        )} */}
         {isLoggedIn ? (
             <>
                 <li

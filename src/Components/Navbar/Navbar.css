@@ -98,7 +98,9 @@ nav {
 }
 
 /* Hover effect for individual links in the navigation */
-.link a:hover685fb;
+.link a:hover,
+.link a i:hover {
+    color: #3685fb;
 }
 
 /* Media queries for mobile responsiveness */
