@@ -12,6 +12,7 @@ import AppointmentForm from "./Components/AppointmentForm/AppointmentForm";
 import BookingConsultation from "./Components/BookingConsultation";
 import Notification from "./Components/Notification/Notification";
 import { NotificationProvider } from "./Components/Notification/NotificationContext";
+import GiveReviews from "./Components/GiveReviews/GiveReviews";
 
 function App() {
     const [notificationTrigger, setNotificationTrigger] = useState(0);
@@ -43,6 +44,7 @@ function App() {
                         <Route path="/doctor-card" element={<DoctorCard />} />
                         <Route path="/appt-form" element={<AppointmentForm />} />
                         <Route path="/booking-consultation" element={<BookingConsultation />} />
+                        <Route path="/reviews" element={<GiveReviews />} />
                     </Routes>
                 </Notification>
             </Router>
