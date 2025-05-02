@@ -63,7 +63,7 @@ const Navbar = () => {
           <Link to="/">Home</Link>
         </li>
         <li className="link">
-          <Link to="/search/doctors">Appointments</Link>
+          <Link to="/search/doctors/booking-consultation">Appointments</Link>
         </li>
         <li className="link">
           <Link to="/healthblog">Health Blog</Link>
@@ -94,6 +94,9 @@ const Navbar = () => {
                             <div className="card-body p-2">
                                 <Link to="/profile" className="dropdown-item text-dark">
                                 <i className="fa fa-user me-2"></i> Your Profile
+                                </Link>
+                                <Link to="/reports" className="dropdown-item text-dark">
+                                    <i className="fa fa-file-text-o me-2"></i> Your Reports
                                 </Link>
                             </div>
                         </div>

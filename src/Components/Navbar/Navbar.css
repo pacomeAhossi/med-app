@@ -54,10 +54,10 @@ nav {
 }
 
 /* Hover effect for links in the dropdown menu */
-.dropdown-menu li a:hover {
+.dropdown-menu li a:hover,
+.dropdown-item:hover {
     color: #2190ff;
 }
-
 /* Styling for the logo in the navbar */
 .nav__logo {
     font-size: 2rem;
