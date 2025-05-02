@@ -75,17 +75,23 @@ function ReportsLayout() {
                 <td>{item.doctor.name}</td>
                 <td>{item.doctor.speciality}</td>
                 <td>
-                  <button className="btn btn-primary" onClick={() => handleViewReport(item.report)}>
+                <a
+                    href="/report/patient_report.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-view"
+                >
                     View Report
-                  </button>
+                </a>
                 </td>
                 <td>
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleDownloadPDF(item.report, item.doctor.name.replace(/\s+/g, "_"))}
-                  >
-                    Download Report
-                  </button>
+                    <a 
+                        href="/report/patient_report.pdf" 
+                        download 
+                        className="btn btn-download"
+                    >
+                        Download Report
+                    </a>
                 </td>
               </tr>
             ))}
