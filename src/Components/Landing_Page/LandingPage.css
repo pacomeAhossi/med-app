@@ -111,9 +111,9 @@ button {
     
 }
 
-@media screen and (max-width:400px) {
-    .hero-section h1 {
-        font-size: 35px;
+@media screen and (max-width: 400px) {
+    .hero-section ..flex-hero h1 {
+        font-size: 1.2rem;
     }
 
     .hero-section {
