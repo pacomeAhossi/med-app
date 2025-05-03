@@ -6,11 +6,11 @@ import { NotificationContext } from './NotificationContext';
 // Function component Notification to display user notifications
 const Notification = ({ children }) => {
 
+    
   // State variables to manage user authentication, username, doctor data, and appointment data
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [doctorData, setDoctorData] = useState(null);
-  const [appointmentData, setAppointmentData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // state pour forcer le refresh du composnt Notification
@@ -18,6 +18,10 @@ const Notification = ({ children }) => {
     const [fadeOut, setFadeOut] = useState(false); // state pour le fade-out
 
     const [appointmentList, setAppointmentList] = useState([]);
+
+    const [hiddenIndexes, setHiddenIndexes] = useState([]);
+
+    const isMobile = window.innerWidth <= 768;
 
 
   // useEffect hook to perform side effects in the component
@@ -90,14 +94,16 @@ const Notification = ({ children }) => {
   const formatDate = (dateStr) => {
     if (!dateStr) return 'Not specified';
     const date = new Date(dateStr);
-    return date.toLocaleDateString(undefined, {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  };
+    const year = date.getFullYear();                            // Année
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Mois (0-indexé)
+    const day = String(date.getDate()).padStart(2, '0');        // Jour
+    return `${year}-${month}-${day}`;
+    };
+
   
+  const handleHideNotification = (index) => {
+    setHiddenIndexes((prev) => [...prev, index]);
+  };
   // Return JSX elements to display Navbar, children components, and appointment details if user is logged in
   return (
 
@@ -107,27 +113,27 @@ const Notification = ({ children }) => {
             {/* Render children components */}
             {children}
             {/* Display appointment details if user is logged in and appointmentData is available */}
-            {/* {isLoggedIn && appointmentData && (
-                <>
-                <div className="notification-card">
-                    <h3>📅 Appointment Confirmed</h3>
-                    <p><strong>Doctor:</strong> {doctorData.name}</p>
-                    <p><strong>Speciality:</strong> {doctorData.speciality} years</p>
-                    <p><strong>Name:</strong> {appointmentData.name}</p>
-                    <p><strong>Phone Number:</strong> {appointmentData.phoneNumber}</p>
-                    <p><strong>Date of Appointment:</strong> {formatDate(appointmentData.appointmentDate)}</p>
-                    <p><strong>Time Slot:</strong> {formatTime(appointmentData.appointmentTime)}</p>
-                </div>
-                </>
-            )} */}
             {isLoggedIn && appointmentList.length > 0 && (
-                <div className='notificaion-container mt-4 p-2'>
+                <div className='notification-container mt-4 p-2'>
                     { appointmentList.map((appt, index) => (
-                        <div key={index} className={`notification-card mt-4 p-4 border rounded ${fadeOut ? 'fade-out' : ''}`}>
+                        <div
+                            key={index}
+                            className={`notifications-card mt-4 p-4 border rounded ${
+                                hiddenIndexes.includes(index) ? 'fade-out' : ''
+                            }`}
+                        >
+                            {isMobile && (
+                                <button
+                                onClick={() => handleHideNotification(index)}
+                                className="btn-close-mobile"
+                                >
+                                ✖ Fermer
+                                </button>
+                            )}
                             {isLoading ? (
                             // Placeholder animé de Bootstrap pendant le chargement
                             <div className="placeholder-glow">
-                                <h3 className="placeholder col-6"></h3>
+                                <h4 className="placeholder col-6"></h4>
                                 <p className="placeholder col-7"></p>
                                 <p className="placeholder col-5"></p>
                                 <p className="placeholder col-8"></p>
@@ -139,13 +145,13 @@ const Notification = ({ children }) => {
                             // Contenu normal quand chargé
                             // appointmentData && doctorData && (
                                 <>
-                                <h3>📅 Appointment Confirmed</h3>
-                                <p><strong>Doctor:</strong> {appt.doctor?.name}</p>
-                                <p><strong>Speciality:</strong> {appt.doctor?.speciality}</p>
-                                <p><strong>Name:</strong> {appt.name}</p>
-                                <p><strong>Phone Number:</strong> {appt.phoneNumber}</p>
-                                <p><strong>Date of Appointment:</strong> {formatDate(appt.appointmentDate)}</p>
-                                <p><strong>Time Slot:</strong> {formatTime(appt.appointmentTime)}</p>
+                                    <h4>📅 Appointment Details</h4>
+                                    <p><strong>Doctor:</strong> {appt.doctor?.name}</p>
+                                    <p><strong>Speciality:</strong> {appt.doctor?.speciality}</p>
+                                    <p><strong>Name:</strong> {appt.name}</p>
+                                    <p><strong>Phone Number:</strong> {appt.phoneNumber}</p>
+                                    <p><strong>Date of Appointment:</strong> {formatDate(appt.appointmentDate)}</p>
+                                    <p><strong>Time Slot:</strong> {formatTime(appt.appointmentTime)}</p>
                                 </>
                             // )
                             )}
@@ -158,5 +164,4 @@ const Notification = ({ children }) => {
   );
 };
 
-// Export Notification component for use in other parts of the application
 export default Notification;
