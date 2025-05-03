@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { jsPDF } from "jspdf";
+import './ReportsLayout.css';
 
 function ReportsLayout() {
   const [appointments, setAppointments] = useState([]);
@@ -79,7 +80,7 @@ function ReportsLayout() {
                     href="/report/patient_report.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-view"
+                    className="btn btn-outline-primary"
                 >
                     View Report
                 </a>
@@ -88,7 +89,7 @@ function ReportsLayout() {
                     <a 
                         href="/report/patient_report.pdf" 
                         download 
-                        className="btn btn-download"
+                        className="btn btn-primary"
                     >
                         Download Report
                     </a>
