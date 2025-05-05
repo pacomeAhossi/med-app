@@ -1,55 +1,118 @@
-/* Styles for the main container */
-.container {
-    max-width: 900px; /* Maximum width of the container */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 40px; /* Padding inside the container */
-    margin-top: 10%; /* Top margin of 10% */
+:root {
+  font-size: 16px;
 }
 
-/* Styles for form groups */
-.form-group {
-    margin-bottom: 20px; /* Bottom margin for spacing between form groups */
+/* Container responsive */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f4f7fa;
 }
 
-/* Styles for form group labels */
+/* Card style */
+.login-card {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Title */
+.login-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* Subtext */
+.login-subtext {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.signup-link {
+  color: #2190FF;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  background: #ffe6e6;
+  padding: 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* Form */
+.login-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
 .form-group label {
-    display: block; /* Make labels display as block elements */
-    margin-bottom: 5px; /* Bottom margin for spacing below labels */
-    font-weight: bold; /* Bold text for labels */
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-/* Styles for form controls */
 .form-control {
-    width: 40%; /* Width of form controls */
-    padding: 8px; /* Padding inside form controls */
-    font-size: 16px; /* Font size of form controls */
-    border: 1px solid #ccc; /* Border around form controls */
-    border-radius: 4px; /* Border radius for rounded corners */
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-right: 2.5rem;
 }
 
-/* Styles for button groups */
-.btn-group {
-    margin-top: .0001px; /* Top margin for spacing above button groups */
-    margin-bottom: 20px; /* Bottom margin for spacing below button groups */
+/* Password wrapper */
+.password-wrapper {
+  position: relative;
 }
 
-/* Styles for buttons */
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  font-size: 1.2rem;
+}
+
+/* Button */
 .btn {
-    padding: 10px 20px; /* Padding inside buttons */
-    font-size: 16px; /* Font size of buttons */
-    border: none; /* No border for buttons */
-    border-radius: 4px; /* Border radius for rounded corners on buttons */
-    cursor: pointer; /* Cursor style on hover for buttons */
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-/* Styles for primary buttons */
 .btn-primary {
-    background-color: #007bff; /* Background color for primary buttons */
-    color: #fff; /* Text color for primary buttons */
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
 }
 
-/* Styles for danger (red) buttons */
-.btn-danger {
-    background-color: #dc3545; /* Background color for danger buttons */
-    color: #fff; /* Text color for danger buttons */
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.5rem;
+  }
 }
