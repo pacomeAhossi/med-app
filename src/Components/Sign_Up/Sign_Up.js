@@ -1,136 +1,206 @@
-// Following code has been commented with appropriate comments for your reference.
-import React, { useState } from 'react';
-import './Sign_Up.css'
-import { Link, useNavigate } from 'react-router-dom';
-import { API_URL } from '../../config';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import './Sign_Up.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { API_URL } from "../../config";
 
-// Function component for Sign Up form
 const Sign_Up = () => {
-    // State variables using useState hook
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [showerr, setShowerr] = useState(''); // State to show error messages
-    const navigate = useNavigate(); // Navigation hook from react-router
+  const navigate = useNavigate();
 
-    // Function to handle form submission
-    const register = async (e) => {
-        e.preventDefault(); // Prevent default form submission
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: ""
+  });
 
-        // API Call to register user
-        const response = await fetch(`${API_URL}/api/auth/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password,
-                phone: phone,
-            }),
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors(prev => ({ ...prev, [e.target.name]: "" }));
+  };
+
+  const register = async (e) => {
+    e.preventDefault();
+    setErrors({}); // Réinitialise les erreurs
+
+    // Validation côté client : mots de passe identiques
+    if (formData.password !== formData.confirmPassword) {
+      setErrors({ confirmPassword: "Passwords do not match" });
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+        }),
+      });
+
+      const json = await response.json();
+
+      if (json.authtoken) {
+        sessionStorage.setItem("auth-token", json.authtoken);
+        sessionStorage.setItem("name", formData.name);
+        sessionStorage.setItem("phone", formData.phone);
+        sessionStorage.setItem("email", formData.email);
+        navigate("/");
+        window.location.reload();
+      } else if (json.error) {
+        const fieldErrors = {};
+        json.error.forEach(error => {
+          fieldErrors[error.param] = error.msg;
         });
+        setErrors(fieldErrors);
+      } else if (json.error?.msg) {
+        setErrors({ general: json.error.msg });
+      }
+    } catch (err) {
+      setErrors({ general: "Server error. Please try again later." });
+    }
+  };
 
-        const json = await response.json(); // Parse the response JSON
+  return (
+    <div className="signup-container">
+      <div className="signup-card">
+        <h2 className="signup-title">Create an Account</h2>
+        <p className="signup-subtext">
+          Already have an account? <Link to="/login" className="login-link">Login here</Link>
+        </p>
 
-        if (json.authtoken) {
-            // Store user data in session storage
-            sessionStorage.setItem("auth-token", json.authtoken);
-            sessionStorage.setItem("name", name);
-            sessionStorage.setItem("phone", phone);
-            sessionStorage.setItem("email", email);
+        {errors.general && <div className="error-message">{errors.general}</div>}
 
-            // Redirect user to home page
-            navigate("/");
-            window.location.reload(); // Refresh the page
-        } else {
-            if (json.errors) {
-                for (const error of json.errors) {
-                    setShowerr(error.msg); // Show error messages
-                }
-            } else {
-                setShowerr(json.error.msg);
-            }
-        }
-    };
-
-    // JSX to render the Sign Up form
-    return (
-        <div className="container" style={{marginTop:'5%'}}>
-            <div className="signup-grid">
-                <div class="signup-text"> 
-                    <h1>Sign Up</h1>
-                </div>
-                <div className="signup-text1" style={{ textAlign: 'left' }}> 
-                    Already a member? <span><Link to="/login" style={{color: '#2190FF' }} > Login</Link> </span>
-                </div>
-                <div className="signup-form">
-                    <form method="POST" onSubmit={register}>
-                        {/* <!-- Form group for user's name --> */}
-                        <div class="form-group">
-                            <label htmlFor="name">Name</label> 
-                            <input 
-                                type="text" 
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                name="name" 
-                                id="name" 
-                                className="form-control" 
-                                placeholder="Enter your name" 
-                                aria-describedby="helpId" 
-                            />
-                        </div>
-                        <div class="form-group">
-                            <label htmlFor="phone">Phone</label> 
-                            <input 
-                                type="tel" 
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                                name="phone" 
-                                id="phone" 
-                                className="form-control" 
-                                placeholder="Enter your phone number" 
-                                aria-describedby="helpId" 
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input 
-                                value={email} 
-                                onChange={(e) => setEmail(e.target.value)} 
-                                type="email" 
-                                name="email" 
-                                id="email" 
-                                className="form-control" 
-                                placeholder="Enter your email" 
-                                aria-describedby="helpId" 
-                            />
-                            {showerr && <div className="err" style={{ color: 'red' }}>{showerr}</div>}
-                        </div>
-                        <div class="form-group">
-                            <label htmlFor="password">Password</label> 
-                            <input 
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                type="password"
-                                name="password" 
-                                id="password" 
-                                className="form-control" 
-                                placeholder="Enter your password" 
-                                aria-describedby="helpId" 
-                            />
-                        </div>
-                        <div className="btn-group"> 
-                            <button type="submit" class="btn btn-primary mb-2 mr-1 waves-effect waves-light">Submit</button> 
-                            <button type="reset" class="btn btn-danger mb-2 waves-effect waves-light">Reset</button> 
-                        </div>
-                    </form>
-                </div>
+        <form onSubmit={register} className="signup-form">
+          <div className="form-group">
+            <label htmlFor="name">Name</label>
+            <div className="input-icon">
+              <i className="fa fa-user"></i>
+              <input
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name"
+                required
+                className="form-control"
+              />
             </div>
-        </div>
-        /* Note: Sign up role is not stored in the database. Additional logic can be implemented for this based on your React code. */
-    )
-}
+            {errors.name && <div className="error-message">{errors.name}</div>}
+          </div>
 
-export default Sign_Up; 
+          <div className="form-group">
+            <label htmlFor="phone">Phone</label>
+            <div className="input-icon">
+              <i className="fa fa-phone"></i>
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="form-control"
+                placeholder="Enter your phone number"
+              />
+            </div>
+            {errors.phone && <div className="error-message">{errors.phone}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <div className="input-icon">
+              <i className="fa fa-envelope"></i>
+              <input
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                required
+                className="form-control"
+              />
+            </div>
+            {errors.email && <div className="error-message">{errors.email}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <div className="input-icon password-wrapper">
+              <i className="fa fa-lock"></i>
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter password"
+                required
+                className="form-control"
+              />
+              <FontAwesomeIcon
+                icon={showPassword ? faEyeSlash : faEye}
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              />
+            </div>
+            {errors.password && <div className="error-message">{errors.password}</div>}
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <div className="input-icon password-wrapper">
+              <i className="fa fa-lock"></i>
+              <input
+                name="confirmPassword"
+                type={showPasswordConfirm ? "text" : "password"}
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                placeholder="Confirm your password"
+                required
+                className="form-control"
+              />
+              <FontAwesomeIcon
+                icon={showPasswordConfirm ? faEyeSlash : faEye}
+                className="toggle-password"
+                onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}
+              />
+            </div>
+            {errors.confirmPassword && <div className="error-message">{errors.confirmPassword}</div>}
+          </div>
+
+          <div className="btn-group">
+            <button type="submit" className="btn btn-primary">Submit</button>
+            <button
+              type="reset"
+              className="btn btn-danger"
+              onClick={() => {
+                setFormData({
+                  name: '',
+                  email: '',
+                  phone: '',
+                  password: '',
+                  confirmPassword: ''
+                });
+                setErrors({});
+              }}
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Sign_Up;

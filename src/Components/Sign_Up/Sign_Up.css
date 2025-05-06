@@ -1,117 +1,135 @@
 
-.container {
-    max-width: 900px; /* Set maximum width for the container */
-    margin: 0 auto; /* Center the container horizontally */
-    padding: 40px; /* Add padding inside the container */
-    margin-top: 10%; /* Set top margin as a percentage of the viewport height */
-    overflow: hidden; /* Hide any overflowing content */
+:root {
+    font-size: 16px;
 }
 
-/* Styles for the password visibility icon */
-.password-visibility {
-    position: relative; /* Set the position relative to its normal position */
-    top: -39px; /* Move the element 39 pixels up */
-    left: 92%; /* Move the element 92% to the right */
-    cursor: pointer; /* Change cursor to pointer on hover */
-    font-size: 17px; /* Set font size */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  padding: 2rem;
+  min-height: 100vh;
+  background-color: #f4f7fa;
 }
 
-/* Styles for the grid layout of the signup form */
-.signup-grid {
-    display: grid; /* Use grid layout for the element */
-    grid-template-columns: 0.1fr 1.5fr 8fr; /* Define columns with fractional widths */
-    grid-gap: 10px; /* Set the gap between grid items */
+.signup-card {
+  background-color: #fff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
 }
 
-/* Styles for the main signup text */
-.signup-text {
-    margin-top: 30px; /* Add top margin */
-    grid-column: 1 / 4; /* Span across all three columns */
-    text-align: center; /* Center-align text */
+.signup-title {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
 }
 
-/* Styles for additional signup text */
-.signup-text1 {
-    grid-column: -1 / 3; /* Span from second to third column from the end */
-    text-align: right; /* Right-align text */
+.signup-subtext {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
-.signup-text1 span {
-    color: #3c79a7; /* Set text color */
-    font-weight: 600; /* Set font weight to bold */
-    cursor: pointer; /* Change cursor to pointer on hover */
+.login-link {
+  color: #2190FF;
+  text-decoration: none;
+  font-weight: bold;
 }
 
-/* Styles for the signup form section */
-.signup-form {
-    grid-column: 2 / 4; /* Span from second to fourth column */
+.error-message {
+  color: red;
+  background: #ffe6e6;
+  padding: 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  text-align: center;
 }
 
-/* Styles for the overall signup container */
-.signup {
-    flex: 1; /* Use flexible layout to fill available space */
-    background-color: #fff; /* Set background color to white */
-    padding: 40px; /* Add padding inside the element */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a box shadow with opacity */
-}
-
-/* Styles for the signup heading */
-.signup h1 {
-    margin-bottom: 20px; /* Add bottom margin to the heading */
-    text-align: center; /* Center-align text */
-    color: #3c79a7; /* Set text color */
-    letter-spacing: .1em; /* Add letter-spacing between characters */
-}
-
-/* Styles for the role text in signup */
-.signup-role {
-    font-size: 16px; /* Set font size */
-    margin-bottom: 10px; /* Add bottom margin */
-}
-
-/* Styles for form groups in the signup form */
-.form-group {
-    margin-bottom: 20px; /* Add bottom margin to form groups */
+.signup-form .form-group {
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
-    display: block; /* Display labels as blocks */
-    margin-bottom: 5px; /* Add bottom margin to labels */
-    font-weight: bold; /* Set font weight to bold for labels */
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
-/* Styles for form controls in the signup form */
 .form-control {
-    width: 40%; /* Set width of form controls */
-    padding: 8px; /* Add padding inside form controls */
-    font-size: 16px; /* Set font size */
-    border: 1px solid #ccc; /* Add border with color */
-    border-radius: 4px; /* Add border radius for rounded corners */
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-right: 2.5rem;
 }
 
-/* Styles for button group in the signup form */
-.btn-group {
-    margin-top: .0001px; /* Add a small top margin to button group */
-    margin-bottom: 20px; /* Add bottom margin to button group */
+.password-wrapper {
+  position: relative;
 }
 
-/* Styles for buttons in the signup form */
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  font-size: 1.2rem;
+}
+
 .btn {
-    padding: 10px 20px; /* Set padding for buttons */
-    font-size: 16px; /* Set font size for buttons */
-    border: none; /* Remove button borders */
-    border-radius: 4px; /* Add border radius for rounded corners */
-    cursor: pointer; /* Change cursor to pointer on hover */
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-/* Styles for primary button in the signup form */
 .btn-primary {
-    background-color: #007bff; /* Set background color for primary button */
-    color: #fff; /* Set text color for primary button */
+  background-color: #007bff;
+  color: #fff;
+  transition: background-color 0.3s ease;
 }
 
-/* Styles for danger button in the signup form */
-.btn-danger {
-    background-color: #dc3545; /* Set background color for danger button */
-    color: #fff; /* Set text color for danger button */
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 1.5rem;
+  }
+}
+.btn-group {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.input-icon {
+  position: relative;
+}
+
+.input-icon i {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+.input-icon input {
+  width: 100%;
+  padding: 0.5rem 0.75rem 0.5rem 2.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }

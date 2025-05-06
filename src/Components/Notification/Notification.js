@@ -111,55 +111,58 @@ const Notification = ({ children }) => {
             {/* Render Navbar component */}
             <Navbar ></Navbar>
             {/* Render children components */}
-            {children}
-            {/* Display appointment details if user is logged in and appointmentData is available */}
-            {isLoggedIn && appointmentList.length > 0 && (
-                <div className='notification-container mt-4 p-2'>
-                    { appointmentList.map((appt, index) => (
-                        <div
-                            key={index}
-                            className={`notifications-card mt-4 p-4 border rounded ${
-                                hiddenIndexes.includes(index) ? 'fade-out' : ''
-                            }`}
-                        >
-                            {isMobile && (
-                                <button
-                                onClick={() => handleHideNotification(index)}
-                                className="btn-close-mobile"
-                                >
-                                ✖ Fermer
-                                </button>
-                            )}
-                            {isLoading ? (
-                            // Placeholder animé de Bootstrap pendant le chargement
-                            <div className="placeholder-glow">
-                                <h4 className="placeholder col-6"></h4>
-                                <p className="placeholder col-7"></p>
-                                <p className="placeholder col-5"></p>
-                                <p className="placeholder col-8"></p>
-                                <p className="placeholder col-4"></p>
-                                <p className="placeholder col-9"></p>
-                                <p className="placeholder col-6"></p>
+            <div className='notif-wrapper' >
+                {children}
+                {/* Display appointment details if user is logged in and appointmentData is available */}
+                {isLoggedIn && appointmentList.length > 0 && (
+                    <div className='notification-container mt-4 p-2'>
+                        { appointmentList.map((appt, index) => (
+                            <div
+                                key={index}
+                                className={`notifications-card mt-4 p-4 border rounded ${
+                                    hiddenIndexes.includes(index) ? 'fade-out' : ''
+                                }`}
+                            >
+                                {isMobile && (
+                                    <button
+                                    onClick={() => handleHideNotification(index)}
+                                    className="btn-close-mobile"
+                                    >
+                                    ✖ Fermer
+                                    </button>
+                                )}
+                                {isLoading ? (
+                                // Placeholder animé de Bootstrap pendant le chargement
+                                <div className="placeholder-glow">
+                                    <h4 className="placeholder col-6"></h4>
+                                    <p className="placeholder col-7"></p>
+                                    <p className="placeholder col-5"></p>
+                                    <p className="placeholder col-8"></p>
+                                    <p className="placeholder col-4"></p>
+                                    <p className="placeholder col-9"></p>
+                                    <p className="placeholder col-6"></p>
+                                </div>
+                                ) : (
+                                // Contenu normal quand chargé
+                                // appointmentData && doctorData && (
+                                    <>
+                                        <h4>📅 Appointment Details</h4>
+                                        <p><strong>Doctor:</strong> {appt.doctor?.name}</p>
+                                        <p><strong>Speciality:</strong> {appt.doctor?.speciality}</p>
+                                        <p><strong>Name:</strong> {appt.name}</p>
+                                        <p><strong>Phone Number:</strong> {appt.phoneNumber}</p>
+                                        <p><strong>Date of Appointment:</strong> {formatDate(appt.appointmentDate)}</p>
+                                        <p><strong>Time Slot:</strong> {formatTime(appt.appointmentTime)}</p>
+                                    </>
+                                // )
+                                )}
                             </div>
-                            ) : (
-                            // Contenu normal quand chargé
-                            // appointmentData && doctorData && (
-                                <>
-                                    <h4>📅 Appointment Details</h4>
-                                    <p><strong>Doctor:</strong> {appt.doctor?.name}</p>
-                                    <p><strong>Speciality:</strong> {appt.doctor?.speciality}</p>
-                                    <p><strong>Name:</strong> {appt.name}</p>
-                                    <p><strong>Phone Number:</strong> {appt.phoneNumber}</p>
-                                    <p><strong>Date of Appointment:</strong> {formatDate(appt.appointmentDate)}</p>
-                                    <p><strong>Time Slot:</strong> {formatTime(appt.appointmentTime)}</p>
-                                </>
-                            // )
-                            )}
-                        </div>
 
-                    )) }
-                </div>
-            )}
+                        )) }
+                    </div>
+                )}
+
+            </div>
         </div>
   );
 };
