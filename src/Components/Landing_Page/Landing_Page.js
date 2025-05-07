@@ -28,9 +28,9 @@ const Landing_Page = () => {
                     Wellness is not just a destination; it's a journey of mindful choices and daily transformations. 
                     Nurture your health with love, and watch it bloom into a beacon of joy and vitality."
                 </h4>
-                <a href="#services"> 
+                <Link to="/services"> 
                     <button className="button">Get Started</button> 
-                </a>
+                </Link>
             </div>
         </div>
     </section>

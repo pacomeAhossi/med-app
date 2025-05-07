@@ -1,0 +1,119 @@
+.services-section {
+  padding: 10rem 1.5rem 3rem 1.5rem;
+  background-color: #f9fbfd;
+  text-align: center;
+  min-height: 100vh;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #333;
+  font-weight: 800;
+}
+.sub-text{
+    font-size: 1rem;
+    color: #333;
+    margin-block-end: 2.5rem;
+}
+
+.services-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.service-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.service-card img {
+  width: 100%;
+  height: 160px;
+  max-height: 180px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+}
+
+.service-card h5 {
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.service-card p {
+  font-size: 1rem;
+  color: #555;
+}
+
+
+
+
+/* 
+.services-container {
+  padding: 2rem;
+  background-color: #f4f7fa;
+  min-height: 100vh;
+}
+.services-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+    color: #333;
+    font-weight: bold;
+}
+
+.sub-text{
+    font-size: 1rem;
+    color: #000;
+    margin-block-end: 2.5rem;
+}
+.services-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.service-card {
+  background: #fff;
+  padding: 1.8rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+}
+
+.service-image {
+  max-width: 100%;
+  height: 160px;
+  object-fit: contain;
+  margin-bottom: 1rem;
+}
+
+.service-title {
+  font-size: 1.3rem;
+  margin-bottom: 0.6rem;
+  color: #000;
+}
+
+.service-description {
+  font-size: 0.95rem;
+  color: #555;
+} */
