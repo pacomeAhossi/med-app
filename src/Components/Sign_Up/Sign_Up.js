@@ -56,8 +56,7 @@ const Sign_Up = () => {
         sessionStorage.setItem("name", formData.name);
         sessionStorage.setItem("phone", formData.phone);
         sessionStorage.setItem("email", formData.email);
-        navigate("/");
-        window.location.reload();
+        navigate("/", { replace: true });
       } else if (json.error) {
         const fieldErrors = {};
         json.error.forEach(error => {

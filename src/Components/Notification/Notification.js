@@ -29,7 +29,7 @@ const Notification = ({ children }) => {
     // Retrieve stored username, doctor data, and appointment data from sessionStorage and localStorage
     const storedUsername = sessionStorage.getItem('email');
     const storedDoctorData = JSON.parse(localStorage.getItem('doctorData'));
-    const storedAppointmentData = JSON.parse(localStorage.getItem('lastAppointmentData'));
+    // const storedAppointmentData = JSON.parse(localStorage.getItem('lastAppointmentData'));
     // Set isLoggedIn state to true and update username if storedUsername exists
     if (storedUsername) {
       setIsLoggedIn(true);
@@ -111,11 +111,11 @@ const Notification = ({ children }) => {
             {/* Render Navbar component */}
             <Navbar ></Navbar>
             {/* Render children components */}
-            <div className='notif-wrapper' >
+            <div className='notif-wrapper'>
                 {children}
                 {/* Display appointment details if user is logged in and appointmentData is available */}
                 {isLoggedIn && appointmentList.length > 0 && (
-                    <div className='notification-container mt-4 p-2'>
+                    <div className='notification-container-overlay mt-4 p-2'>
                         { appointmentList.map((appt, index) => (
                             <div
                                 key={index}
@@ -161,7 +161,6 @@ const Notification = ({ children }) => {
                         )) }
                     </div>
                 )}
-
             </div>
         </div>
   );
