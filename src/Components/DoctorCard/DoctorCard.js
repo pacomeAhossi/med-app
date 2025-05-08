@@ -55,6 +55,14 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
     triggerNotificationRefresh();
   };
 
+  const formatTime = (timeStr) => {
+    if (!timeStr) return 'Not specified';
+    const [hour, minute] = timeStr.split(':');
+    const date = new Date();
+    date.setHours(hour, minute);
+    return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+  };
+
   return (
     <div className="doctor-card-container">
       <div className="doctor-card-details-container">
@@ -106,6 +114,8 @@ const DoctorCard = ({ name, speciality, experience, ratings, profilePic }) => {
                     <div className="bookedInfo" key={appointment.id}>
                       <p>Name: {appointment.name}</p>
                       <p>Phone Number: {appointment.phoneNumber}</p>
+                      <p>Appointment Date: {appointment.appointmentDate}</p>
+                      <p>Appointment Slot: {formatTime(appointment.appointmentTime)}</p>
                       <button onClick={() => handleCancel(appointment.id)}>Cancel Appointment</button>
                     </div>
                   ))}
