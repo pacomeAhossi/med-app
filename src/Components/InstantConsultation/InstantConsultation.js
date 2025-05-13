@@ -21,7 +21,6 @@ const InstantConsultation = () => {
                 setFilteredDoctors(filtered);
                 
                 setIsSearched(true);
-                window.reload()
             } else {
                 setFilteredDoctors([]);
                 setIsSearched(false);

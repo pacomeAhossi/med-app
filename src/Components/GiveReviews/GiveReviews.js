@@ -81,7 +81,7 @@ function GiveReviews() {
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container mg-top">
       <h2 className="mb-4 text-center">Leave a Review for Your Doctors</h2>
       <div className="table-responsive">
         <table className="table table-bordered align-middle">

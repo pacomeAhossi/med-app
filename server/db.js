@@ -1,5 +1,6 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
-const mongoURI =  "mongodb://root:PvObJFLgWnJxGS8m6nNgPeMS@172.21.116.62:27017";
+const mongoURI =  process.env.MONGO_URI;
 
 const connectToMongo = async (retryCount) => {
     const MAX_RETRIES = 3;

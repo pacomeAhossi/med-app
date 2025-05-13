@@ -5,8 +5,6 @@ import Landing_Page from "./Components/Landing_Page/Landing_Page";
 import Sign_Up from "./Components/Sign_Up/Sign_Up";
 import Login from "./Components/Login/Login";
 import InstantConsultation from './Components/InstantConsultation/InstantConsultation';
-import DoctorCard from "./Components/DoctorCard/DoctorCard";
-import AppointmentForm from "./Components/AppointmentForm/AppointmentForm";
 import BookingConsultation from "./Components/BookingConsultation";
 import Notification from "./Components/Notification/Notification";
 import { NotificationProvider } from "./Components/Notification/NotificationContext";
@@ -31,7 +29,7 @@ function App() {
                         <Route path="/services" element={<Services />} />
                         <Route path="/booking-consultation" element={<BookingConsultation />} />
                         <Route path="/instant-consultation" element={<InstantConsultation />} />
-                        {/* <Route path="/search/doctors" element={<BookingConsultation />} /> */}
+                        <Route path="/search/doctors" element={<BookingConsultation />} />
                         <Route path="/reviews" element={<GiveReviews />} />
                         <Route path="/reports" element={<ReportsLayout />} />
                     </Routes>

@@ -1,3 +1,6 @@
+.mg-top{
+    padding: 10rem 2rem 2rem 2rem;
+}
 .btn.btn-primary.disabled{
     background-color: #828080;
 }

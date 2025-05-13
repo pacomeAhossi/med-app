@@ -17,10 +17,10 @@ const Landing_Page = () => {
                         Our Responsibility
                     </span>
                 </h1>
-                <div class="blob-cont"> 
+                <div className="blob-cont"> 
                     <div className="blue blob"></div> 
                 </div>
-                <div class="blob-cont"> 
+                <div className="blob-cont"> 
                     <div className="blue1 blob"></div>
                 </div>
                 <h4>
